@@ -15,6 +15,7 @@ import java.util.HashMap;
 @RequestMapping("/api/auth")
 public class AuthController {
 
+
     @Autowired
     private AuthService authService;
 
