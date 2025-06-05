@@ -50,10 +50,11 @@ public class AuthController {
         if (token != null) {
             response.put("status", 200);
             response.put("token", token);
+            response.put("message", "Login Berhasil");
             return ResponseEntity.ok(response);
         } else {
             response.put("status", 401);
-            response.put("message", "Invalid credentials");
+            response.put("message", "Token Tidak Valid");
             return ResponseEntity.status(401).body(response);
         }
     }
