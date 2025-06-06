@@ -1,3 +1,4 @@
+// User.java
 package com.bni.bni.entity;
 
 import jakarta.persistence.*;
@@ -21,56 +22,46 @@ public class User {
     private String role;
 
     @Column(name = "created_at", nullable = false)
-    private OffsetDateTime createdAt;
+    private OffsetDateTime createdAt = OffsetDateTime.now();
 
-    public User() {
-      // default constructor
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive = true;
+
+    @Column(name = "update_at", nullable = false)
+    private OffsetDateTime updateAt = OffsetDateTime.now();
+
+    @Column(name = "email_address")
+    private String emailAddress;
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updateAt = OffsetDateTime.now();
     }
 
-    public User(String username, String passwordHash, String role, OffsetDateTime createdAt) {
-        this.username = username;
-        this.passwordHash = passwordHash;
-        this.role = role;
-        this.createdAt = createdAt;
-    }
+    public User() {}
 
-    public Long getId() {
-        return id;
-    }
+    // Getters and Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
 
-    public String getUsername() {
-        return username;
-    }
+    public String getPasswordHash() { return passwordHash; }
+    public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
 
-    public String getPasswordHash() {
-        return passwordHash;
-    }
+    public OffsetDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(OffsetDateTime createdAt) { this.createdAt = createdAt; }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
-    }
+    public OffsetDateTime getUpdateAt() { return updateAt; }
+    public void setUpdateAt(OffsetDateTime updateAt) { this.updateAt = updateAt; }
 
-    public String getRole() {
-        return role;
-    }
+    public boolean getIsActive() { return isActive; }
+    public void setIsActive(boolean isActive) { this.isActive = isActive; }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public OffsetDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(OffsetDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-}
+    public String getEmailAddress() { return emailAddress; }
+    public void setEmailAddress(String emailAddress) { this.emailAddress = emailAddress; }
+} 

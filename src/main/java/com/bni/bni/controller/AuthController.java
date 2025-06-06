@@ -28,33 +28,37 @@ public class AuthController {
     private JwtUtil jwtUtil;
 
     @PostMapping("/register")
-    public ResponseEntity<Map<String, Object>> register(@RequestBody Map<String, String> body) {
-        String username = body.get("username");
-        String password = body.get("password");
-        String message = authService.register(username, password);
+public ResponseEntity<Map<String, Object>> register(@RequestBody Map<String, String> body) {
+    ...
+}
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", 200);
-        response.put("message", message);
+public ResponseEntity<Map<String, Object>> register(@RequestBody Map<String, String> body) {
+    String username = body.get("username");
+    String password_hash = body.get("password_hash");
+    String email_address = body.get("email_address");
 
-        return ResponseEntity.ok(response);
-    }
+    String message = authService.register(username, password_hash, email_address);
 
+    Map<String, Object> response = new HashMap<>();
+    response.put("status", 200);
+    response.put("message", message);
+
+    return ResponseEntity.ok(response);
+}
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> body) {
         String username = body.get("username");
-        String password = body.get("password");
-        String token = authService.login(username, password);
+        String password_hash = body.get("password_hash");
+        String token = authService.login(username, password_hash);
 
         Map<String, Object> response = new HashMap<>();
         if (token != null) {
             response.put("status", 200);
             response.put("token", token);
-            response.put("message", "Login Berhasil");
             return ResponseEntity.ok(response);
         } else {
             response.put("status", 401);
-            response.put("message", "Token Tidak Valid");
+            response.put("message", "Invalid credentials");
             return ResponseEntity.status(401).body(response);
         }
     }
