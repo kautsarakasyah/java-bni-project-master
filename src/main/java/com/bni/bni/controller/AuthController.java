@@ -14,12 +14,12 @@ import java.util.HashMap;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+//
+//    @Value("${CONFIG_MAP_VALUE:default-config}")
+//    private String configMapValue;
 
-    // @Value("${CONFIG_MAP_VALUE:default-config}")
-    // private String configMapValue;
-
-    // @Value("${SECRET_VALUE:default-secret}")
-    // private String secretValue;
+//    @Value("${SECRET_VALUE:default-secret}")
+//    private String secretValue;
 
     @Autowired
     private AuthService authService;
@@ -28,37 +28,34 @@ public class AuthController {
     private JwtUtil jwtUtil;
 
     @PostMapping("/register")
-public ResponseEntity<Map<String, Object>> register(@RequestBody Map<String, String> body) {
-    ...
-}
+    public ResponseEntity<Map<String, Object>> register(@RequestBody Map<String, String> body) {
+        String username = body.get("username");
+        String emailAddress = body.get("emailAddress"); // tambahkan ini
+        String password = body.get("password");
+        String message = authService.register(username, emailAddress, password);
 
-public ResponseEntity<Map<String, Object>> register(@RequestBody Map<String, String> body) {
-    String username = body.get("username");
-    String password_hash = body.get("password_hash");
-    String email_address = body.get("email_address");
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", 200);
+        response.put("message", message);
 
-    String message = authService.register(username, password_hash, email_address);
+        return ResponseEntity.ok(response);
+    }
 
-    Map<String, Object> response = new HashMap<>();
-    response.put("status", 200);
-    response.put("message", message);
-
-    return ResponseEntity.ok(response);
-}
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> body) {
         String username = body.get("username");
-        String password_hash = body.get("password_hash");
-        String token = authService.login(username, password_hash);
+        String password = body.get("password");
+        String token = authService.login(username, password);
 
         Map<String, Object> response = new HashMap<>();
         if (token != null) {
             response.put("status", 200);
             response.put("token", token);
+            response.put("message", "Login Berhasil");
             return ResponseEntity.ok(response);
         } else {
             response.put("status", 401);
-            response.put("message", "Invalid credentials");
+            response.put("message", "Token Tidak Valid");
             return ResponseEntity.status(401).body(response);
         }
     }
@@ -86,11 +83,9 @@ public ResponseEntity<Map<String, Object>> register(@RequestBody Map<String, Str
 
             response.put("status", 200);
             response.put("username", claims.getSubject());
-            response.put("role", claims.get("role"));
+            // Hapus response.put("role", ...)
             response.put("issuedAt", claims.getIssuedAt());
             response.put("expiration", claims.getExpiration());
-            // response.put("config_map", configMapValue);
-            // response.put("secret", secretValue);
 
             return ResponseEntity.ok(response);
 
@@ -100,4 +95,5 @@ public ResponseEntity<Map<String, Object>> register(@RequestBody Map<String, Str
             return ResponseEntity.status(401).body(response);
         }
     }
+
 }
