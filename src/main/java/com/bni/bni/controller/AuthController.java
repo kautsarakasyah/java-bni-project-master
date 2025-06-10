@@ -55,7 +55,7 @@ public class AuthController {
             return ResponseEntity.ok(response);
         } else {
             response.put("status", 401);
-            response.put("message", "Token Tidak Valid");
+            response.put("message", "Token Tidak Valid2");
             return ResponseEntity.status(401).body(response);
         }
     }
