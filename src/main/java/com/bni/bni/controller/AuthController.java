@@ -91,7 +91,7 @@ public class AuthController {
 
         } catch (Exception e) {
             response.put("status", 401);
-            response.put("message", "Token tidak valid");
+            response.put("message", "Token tidak valid2");
             return ResponseEntity.status(401).body(response);
         }
     }
