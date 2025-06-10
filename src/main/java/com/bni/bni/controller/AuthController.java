@@ -75,7 +75,7 @@ public class AuthController {
 
             if (!jwtUtil.validateToken(token)) {
                 response.put("status", 401);
-                response.put("message", "Token tidak valid atau expired");
+                response.put("message", "Token tidak valid atau expired2");
                 return ResponseEntity.status(401).body(response);
             }
 
