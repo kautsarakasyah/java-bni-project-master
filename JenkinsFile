@@ -2,7 +2,7 @@ pipeline {
 	agent any
 
 	environment {
-		NAMESPACE = "alvarolt17-dev"
+		NAMESPACE = "kautsarakasyah-dev"
 		BUILD_NAME = "devsecops-starter"
 		DEPLOYMENT_NAME = "jenkins"
 	}
