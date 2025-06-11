@@ -21,7 +21,7 @@ public class ProfilesController {
         Profiles created = profilesService.createProfile(profile);
         return ResponseEntity.ok(Map.of(
                 "status", 200,
-                "message", "Profile created successfully",
+                "message", "Profile created successfully :)",
                 "profile", created
         ));
     }
