@@ -26,3 +26,20 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 5
 
+name: Notify Telegram on Merge to Main/Master
+on:
+  push:
+    branches:
+      - main
+      - master
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Send Telegram Notification
+        run: |
+          curl -X POST "https://api.telegram.org/bot7964045222:AAElE5m35X1rUfU-2lO0ZpLzwuy_esmMsvY/sendMessage" \
+            -d chat_id=5448715930 \
+            -d text="🚨 Merge to Main/Master Branch 🚨\nA merge has been made to the main/master branch. Please review the changes!"
